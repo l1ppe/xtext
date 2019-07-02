@@ -1,0 +1,59 @@
+grammar org.xtext.gmse.Domain with org.eclipse.xtext.common.Terminals
+
+generate domain "http://www.xtext.org/gmse/Domain"
+
+Festival:
+	'FESTIVAL' name=STRING
+	'Visitors' visitors=INT
+	'Startdate' startdate=STRING
+	'Enddate' enddate=STRING
+	lineup = Lineup
+	stages= Stagelist
+	timetable = Timetable
+	foodLineup = FoodLineup?
+	;
+	
+Lineup:
+	'LINEUP' '[' artists+=Artist+ ']';
+	
+Artist:
+	name=STRING 
+	'country' country = STRING;
+	
+Stagelist:
+	'STAGELIST' '[' stages+=Stage+ ']';
+
+Stage:
+	'Stage' name=STRING
+	'Capacity' capacity=INT
+	'Type' info=STRING;
+
+Timetable:
+	'TIMETABLE' '[' timetable+=TimetableEntry+ ']';
+	
+TimetableEntry: 
+	'Artist' name=[Artist|STRING]
+	'Day' day=days
+	'Timeslot' time=STRING 
+	'Stage' stage=[Stage|STRING];
+	
+enum days: THURSDAY="Donnerstag"|
+	FRIDAY = "Freitag"|
+	SATURDAY = "Samstag"|
+	SUNDAY="Sonntag"
+;
+
+FoodLineup:
+	'FOODLINEUP' '[' foodlist+=Food+ ']'
+;
+
+Food:
+	name=STRING
+	'Typ' type=STRING
+	'Ort' place=STRING
+	;
+
+	
+	
+
+	
